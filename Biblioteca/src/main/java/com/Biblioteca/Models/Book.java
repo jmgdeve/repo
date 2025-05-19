@@ -4,6 +4,7 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 
 import java.util.Date;
+import java.util.List;
 
 
 @Entity
@@ -22,6 +23,10 @@ public class Book {
     @JoinColumn(name = "userId", nullable = false)
     @JsonIgnore //Evitar serialización de la relación con User
     private User user;
+
+    // relación con la tabla de anotaciones, borrar en cascada
+    @OneToMany(mappedBy = "book", cascade = CascadeType.ALL, orphanRemoval = true)
+    private List<Annotation> annotations;
 
     public Book() {
     }
@@ -99,6 +104,14 @@ public class Book {
     }
     public void setUser(User user) {
         this.user = user;
+    }
+
+    public List<Annotation> getAnnotations() {
+        return annotations;
+    }
+
+    public void setAnnotations(List<Annotation> annotations) {
+        this.annotations = annotations;
     }
 
 

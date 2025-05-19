@@ -17,9 +17,12 @@ export class AnnotationService {
   }
 
   // Añadir una nueva anotación a un libro
-  addAnnotationToBook(bookId: number, annotation: string): Observable<any> {
+  addAnnotationToBook(bookId: number, annotation: {text: string, page: string}): Observable<any> {
     console.log  ('Adding annotation:', { bookId, annotation });
-    return this.http.post<any>(`${this.apiUrl}/add/${bookId}`, { text: annotation });
+    return this.http.post<any>(`${this.apiUrl}/add/${bookId}`, annotation);
     
+  }
+  deleteAnnotation(annotationId: number): Observable<any> {
+    return this.http.delete(`${this.apiUrl}/delete/${annotationId}`);
   }
 }

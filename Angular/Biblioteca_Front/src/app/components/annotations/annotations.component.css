@@ -1,0 +1,203 @@
+.annotation-editor {
+  position: relative;
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  padding: 20px 0 0 0;
+  min-height: 100vh;
+  box-sizing: border-box;
+}
+
+
+/* Modal flotante */
+.annotation-modal {
+  position: fixed;
+  
+  top: 120px; /* Ajusta según lo lejos que quieras el modal del top */
+  left: 70%;
+  transform: translateX(-50%);
+  width: 600px;
+  max-width: 600vw;
+  background-color: white;
+  padding: 32px 24px;
+  border-radius: 12px;
+  box-shadow: 0 8px 32px rgba(0,0,0,0.18);
+  z-index: 10;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.annotation-modal textarea {
+  width: 100%;
+  max-width: 100%;
+  height: 150px;
+  margin-bottom: 20px;
+  padding: 10px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  resize: none;
+  box-sizing: border-box;
+}
+.modal-content {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: 100%;
+}
+.annotation-modal button {
+  background-color: #007bff;
+  color: white;
+  border: none;
+  padding: 10px 20px;
+  border-radius: 4px;
+  cursor: pointer;
+}
+
+.annotation-modal button:hover {
+  background-color: #0056b3;
+}
+
+.annotation-modal h3 {
+   font-size: 20px;
+  font-weight: bold;
+  color: #007bff;
+  margin-bottom: 18px;
+  margin-top: 0;
+  font-family: 'Georgia', serif;
+  letter-spacing: 0.5px;
+  text-align: center;
+  background: linear-gradient(90deg, #e3f0fc 60%, transparent 100%);
+  padding: 8px 0;
+  border-radius: 6px;
+  box-shadow: 0 2px 6px rgba(0,123,255,0.06);
+}
+/*estilos del boton añadir anotacion*/
+.addannotation-button-container {
+  display: flex;
+  justify-content: flex-start; /* alinea a la izquierda */
+  align-items: center;
+  width: 100%;
+  margin-bottom: 10px;
+}
+.addannotation-button {
+  background-color: #3498db;
+  color: white;
+  padding: 8px 12px;
+  font-size: 14px;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  transition: background-color 0.2s;
+  margin-bottom: 10px;
+}
+
+.addannotation-button:hover {
+  background-color: #2980b9;
+}
+.save-btn {
+  background-color: #007bff;
+  color: white;
+  border: none;
+  padding: 10px 20px;
+  border-radius: 4px;
+  cursor: pointer;
+  flex: 1;
+  transition: background 0.2s;
+  margin-left: 0;
+}
+
+.save-btn:hover {
+  background-color: #0056b3;
+}
+/* Título de las anotaciones */
+.annotations-list h4 {
+  font-size: 16px;
+  font-weight: bold;
+  color: #007bff;
+  margin-bottom: 10px;
+  margin-top: 0;
+  font-family: 'Georgia', serif;
+}
+
+/* Lista de anotaciones */
+.annotations-list ul {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.annotations-list li {
+  background: #f8f9fa;
+  border: 1px solid #ddd;
+  border-radius: 6px;
+  margin-bottom: 8px;
+  padding: 8px 12px;
+  font-size: 14px;
+  color: #333;
+  transition: background 0.2s, box-shadow 0.2s;
+  cursor: pointer;
+}
+
+.annotations-list li:hover {
+  background: #e6f0fa;
+  box-shadow: 0 2px 6px rgba(0,0,0,0.07);
+  color: #007bff;
+}
+/* boton de borrar anotacion*/
+.modal-buttons {
+  display: flex;
+  justify-content: space-between;
+  width: 100%;
+  gap: 10px;
+  margin-top: 10px;
+}
+
+.close-btn {
+  background-color: #007bff;
+  color: white;
+  border: none;
+  padding: 10px 10px;
+  border-radius: 4px;
+  cursor: pointer;
+  flex: 1;
+  transition: background 0.2s;
+}
+
+.close-btn:hover {
+  background-color: #0056b3;
+}
+
+.annotation-modal button.delete-btn {
+  background-color: #e74c3c;
+  color: white;
+  border: none;
+  padding: 10px 20px;
+  border-radius: 4px;
+  cursor: pointer;
+  flex: 1;
+  transition: background 0.2s;
+}
+
+.annotation-modal button.delete-btn:hover {
+  background-color: #c0392b;
+}
+.annotation-page-input {
+  width: 100%;
+  padding: 10px 14px;
+  margin-bottom: 15px;
+  border: 1.5px solid #007bff;
+  border-radius: 5px;
+  font-size: 15px;
+  font-family: 'Arial', sans-serif;
+  background-color: #f5faff;
+  transition: border-color 0.2s, box-shadow 0.2s;
+  box-sizing: border-box;
+}
+
+.annotation-page-input:focus {
+  border-color: #0056b3;
+  outline: none;
+  box-shadow: 0 0 0 2px #cce4ff;
+}

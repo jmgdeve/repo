@@ -1,89 +1,20 @@
-<!-- Botón de cerrar sesión -->
+<!-- Botón de cerrar sesión  
 <button (click)="logout()" class="logout-button">Cerrar sesión</button>
 
 <div class="container">
-  <!-- Columna izquierda: Lista de libros -->
+    Componente de libros 
+  <app-books></app-books>
+
+    Parte central: Formulario para añadir o editar anotaciones --> 
+ <!-- Botón de cerrar sesión
+<button (click)="logout()" class="logout-button">Cerrar sesión</button> --> 
+
+<div class="container">
   <div class="books-column">
-    <h2>Mis Libros</h2>
-
-    <!-- Botón para abrir el formulario de agregar libro -->
-    <button (click)="AddBookForm = !AddBookForm" class="add-book-button">
-      {{ AddBookForm ? 'Cancelar' : 'Añadir Libro' }}
-    </button>
-
-    <!-- Formulario para añadir un libro -->
-    <div *ngIf="AddBookForm" class="add-book-form">
-      <h3>Añadir un nuevo libro</h3>
-      <form (ngSubmit)="addBook()">
-        <label for="tittle">Título:</label>
-        <input id="tittle" [(ngModel)]="newBook.tittle" name="tittle" required />
-
-        <label for="author">Autor:</label>
-        <input id="author" [(ngModel)]="newBook.author" name="author" required />
-
-        <label for="year">Año:</label>
-        <input id="year" type="number" [(ngModel)]="newBook.year" name="year" required />
-
-        <label for="genre">Género:</label>
-        <input id="genre" [(ngModel)]="newBook.genre" name="genre" required />
-
-        <button type="submit">Guardar</button>
-      </form>
-    </div>
-
-    <!-- Lista de libros -->
-    <div *ngFor="let book of books" class="book-container">
-      <div class="book-header">
-        <h3 (click)="toggleAnnotations(book.bookId)" class="book-title">
-          {{ book.title }} ({{ book.year }})
-        </h3>
-        <div class="book-actions">
-          <button (click)="deleteBook(book.bookId)" class="delete-button">Eliminar</button>
-          <button (click)="openAnnotationForm(book.bookId)">Añadir Anotación</button>
-          <button (click)="toggleEditBook(book.bookId)">Modificar Libro</button>
-        </div>
-      </div>
-      <p class="author">{{ book.author }}</p>
-
-      <!-- Formulario para editar el libro -->
-      <div *ngIf="editingBookId === book.bookId" class="edit-book-form">
-        <label for="title-{{ book.bookId }}">Título:</label>
-        <input id="title-{{ book.bookId }}" [(ngModel)]="book.title" name="title-{{ book.bookId }}" />
-
-        <label for="author-{{ book.bookId }}">Autor:</label>
-        <input id="author-{{ book.bookId }}" [(ngModel)]="book.author" name="author-{{ book.bookId }}" />
-
-        <label for="year-{{ book.bookId }}">Año:</label>
-        <input id="year-{{ book.bookId }}" type="number" [(ngModel)]="book.year" name="year-{{ book.bookId }}" />
-
-        <label for="genre-{{ book.bookId }}">Género:</label>
-        <input id="genre-{{ book.bookId }}" [(ngModel)]="book.genre" name="genre-{{ book.bookId }}" />
-
-        <button (click)="updateBook(book.bookId)">Guardar Cambios</button>
-      </div>
-
-      <!-- Desplegable de anotaciones -->
-      <div *ngIf="selectedBookId === book.bookId" class="annotations">
-        <h4>Anotaciones:</h4>
-        <ul>
-          <li *ngFor="let annotation of book.annotations" (click)="selectAnnotation(annotation)">
-            {{ annotation.id }}
-          </li>
-        </ul>
-      </div>
-    </div>
+    <app-books (annotationSelected)="onAnnotationSelected($event)" (bookSelected)="onBookSelected($event)" #booksComp></app-books>
   </div>
-
-  <!-- Parte central: Formulario para añadir o editar anotaciones -->
-  <div class="annotation-editor">
-    <div *ngIf="showAnnotationForm || selectedAnnotation" class="annotation-modal">
-      <div class="modal-content">
-        <h3 *ngIf="showAnnotationForm">Añadir Anotación</h3>
-        <h3 *ngIf="selectedAnnotation">Anotación</h3>
-        <textarea [(ngModel)]="newAnnotation" [readonly]="!!selectedAnnotation" placeholder="Escribe tu anotación aquí..."></textarea>
-        <button *ngIf="showAnnotationForm" (click)="addAnnotation()">Guardar</button>
-        <button (click)="closeSelectedAnnotation()">Cerrar</button>
-      </div>
-    </div>
+  <div class="annotations-column">
+    <app-annotations [bookId]="selectedBookId" [selectedAnnotation]="selectedAnnotation" (annotationAdded)="onAnnotationAdded()"></app-annotations>
   </div>
 </div>
+<button (click)="logout()" class="logout-button">Cerrar sesión</button>

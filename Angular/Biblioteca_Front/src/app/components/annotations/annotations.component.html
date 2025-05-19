@@ -1,0 +1,65 @@
+<div class="annotation-editor">
+  <!-- Botón y listado siempre visibles -->
+  <div class="annotations-header">
+    <button 
+      (click)="openAnnotationForm()" 
+      [disabled]="bookId === null"
+      class="addannotation-button"
+      aria-label="Añadir anotación">
+      Añadir Anotación
+    </button>
+    <div class="annotations-list" *ngIf="annotations && annotations.length > 0">
+      <h4 id="annotations-list-title">Anotaciones:</h4>
+      <ul aria-labelledby="annotations-list-title">
+        <li 
+          *ngFor="let annotation of annotations" 
+          (click)="selectAnnotation(annotation)"
+          tabindex="0"
+          (keydown.enter)="selectAnnotation(annotation)"
+          [attr.aria-label]="'Ver anotación ' + annotation.page">
+          {{ annotation.page }}
+        </li>
+      </ul>
+    </div>
+    <div *ngIf="annotations && annotations.length === 0" class="no-annotations">
+      No hay anotaciones para este libro.
+    </div>
+  </div>
+
+  <!-- Modal para añadir anotación -->
+  <div *ngIf="showAnnotationForm" class="annotation-modal">
+    <div class="modal-content">
+      <h3>Nueva Anotación</h3>
+      <input 
+        type="text" 
+        [(ngModel)]="newAnnotationPage" 
+        placeholder="Título"
+        class="annotation-page-input" 
+        required>
+      <textarea 
+        [(ngModel)]="newAnnotation"
+        placeholder="Escribe tu anotación aquí..."
+        required>
+      </textarea>
+      <div class="modal-buttons">
+      <button (click)="addAnnotation()" class="close-btn">Guardar</button>
+      <button (click)="closeAnnotationForm()" class="save-btn">Cerrar</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Modal para ver el texto de l anotación seleccionada -->
+  <div *ngIf="selectedAnnotation && !showAnnotationForm" class="annotation-modal">
+    <div class="modal-content">
+      <h3>{{ selectedAnnotation.page }}</h3>
+      <textarea 
+        [readonly]="true"
+        [value]="selectedAnnotation.text">
+      </textarea>
+      <div class="modal-buttons">
+      <button class="close-btn"(click)="closeSelectedAnnotation()">Cerrar</button>
+      <button class="delete-btn" (click)="deleteSelectedAnnotation()">Borrar</button>
+      </div>
+    </div>
+  </div>
+</div>

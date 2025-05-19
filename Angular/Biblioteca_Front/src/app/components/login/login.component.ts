@@ -23,6 +23,7 @@ export class LoginComponent {
       next: response => {
         this.message = response.message;
         localStorage.setItem('user', JSON.stringify(response.user)); // Guardar el usuario en localStorage
+        localStorage.setItem('jwt', response.token); // Guardar el token en localStorage
         this.router.navigate(['/home']);
       },
       error: (err) => {

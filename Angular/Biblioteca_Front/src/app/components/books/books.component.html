@@ -1,0 +1,69 @@
+<div class="books-column">
+  <h2>Mis Libros</h2>
+
+  <button (click)="AddBookForm = !AddBookForm" class="add-book-button">
+    {{ AddBookForm ? 'Cancelar' : 'Añadir Libro' }}
+  </button>
+
+  <div *ngIf="AddBookForm" class="add-book-form">
+    <h3>Añadir un nuevo libro</h3>
+    <form (ngSubmit)="addBook()" #bookForm="ngForm">
+  <label for="tittle">Título:</label>
+  <input id="tittle" [(ngModel)]="newBook.tittle" name="tittle" required pattern="^[A-Za-z0-9ÁÉÍÓÚáéíóúÑñ\s]+$" #tittleInput="ngModel" />
+  <div *ngIf="tittleInput.invalid && tittleInput.touched" class="error">
+    El título solo puede contener letras y números.
+  </div>
+
+  <label for="author">Autor:</label>
+  <input id="author" [(ngModel)]="newBook.author" name="author" required pattern="^[A-Za-zÁÉÍÓÚáéíóúÑñ\s]+$" #authorInput="ngModel" />
+  <div *ngIf="authorInput.invalid && authorInput.touched" class="error">
+    El autor solo puede contener letras.
+  </div>
+
+  <label for="year">Año:</label>
+  <input id="year" type="number" [(ngModel)]="newBook.year" name="year" required min="0" #yearInput="ngModel" />
+  <div *ngIf="yearInput.invalid && yearInput.touched" class="error">
+    El año debe ser un número válido.
+  </div>
+
+  <label for="genre">Género:</label>
+  <input id="genre" [(ngModel)]="newBook.genre" name="genre" required #genreInput="ngModel" />
+
+  <button type="submit" [disabled]="bookForm.invalid">Guardar</button>
+</form>
+  </div>
+
+  <div *ngFor="let book of books" class="book-container">
+    <div class="book-header">
+      <h3 class="book-title" (click)="selectBook(book)">{{ book.title }} ({{ book.year }})</h3>
+      <div class="book-actions">
+        <button (click)="deleteBook(book.bookId)" class="delete-button">Eliminar</button>
+        <button (click)="toggleEditBook(book.bookId)">Modificar Libro</button>
+      </div>
+    </div>
+    <p class="author">{{ book.author }}</p>
+    
+    <ul class="annotation-titles-list">
+      <li *ngFor="let annotation of book.annotations">
+        {{ annotation.page }}</li>
+    </ul>
+
+
+
+    <div *ngIf="editingBookId === book.bookId" class="edit-book-form">
+      <label for="title-{{ book.bookId }}">Título:</label>
+      <input id="title-{{ book.bookId }}" [(ngModel)]="book.title" name="title-{{ book.bookId }}" />
+
+      <label for="author-{{ book.bookId }}">Autor:</label>
+      <input id="author-{{ book.bookId }}" [(ngModel)]="book.author" name="author-{{ book.bookId }}" />
+
+      <label for="year-{{ book.bookId }}">Año:</label>
+      <input id="year-{{ book.bookId }}" type="number" [(ngModel)]="book.year" name="year-{{ book.bookId }}" />
+
+      <label for="genre-{{ book.bookId }}">Género:</label>
+      <input id="genre-{{ book.bookId }}" [(ngModel)]="book.genre" name="genre-{{ book.bookId }}" />
+
+      <button (click)="updateBook(book.bookId)">Guardar Cambios</button>
+    </div>
+  </div>
+</div>

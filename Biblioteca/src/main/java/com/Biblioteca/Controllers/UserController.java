@@ -4,9 +4,12 @@ package com.Biblioteca.Controllers;
 import com.Biblioteca.Models.Book;
 import com.Biblioteca.Models.User;
 import com.Biblioteca.Repository.UserRepository;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.web.bind.annotation.*;
+import com.Biblioteca.Models.Security;
 
 
 import java.util.HashMap;
@@ -14,12 +17,17 @@ import java.util.List;
 import java.util.Map;
 import java.util.Optional;
 
+
+
+
 @CrossOrigin(origins = "http://localhost:4200") // para permitir el acceso desde el front
 @RestController
 @RequestMapping("/users")
 public class UserController {
     //declara la dependencia de UserRepository
     private final UserRepository userRepository;
+    @Autowired
+    private PasswordEncoder passwordEncoder;
 
     public UserController(UserRepository userRepository) {
         this.userRepository = userRepository;
@@ -49,11 +57,10 @@ public class UserController {
         //comprueba si existe el email
         if (userRepository.findByEmail(user.getEmail()).isPresent()) {
             response.put("message", "Email already registered");
-
-
             return ResponseEntity.status(HttpStatus.CONFLICT).body(response);
         } else {
 
+            user.setPassword(passwordEncoder.encode(user.getPassword()));
             userRepository.save(user);
             response.put("message", "User registered successfully");
 
@@ -73,17 +80,17 @@ public class UserController {
               User userToLogin = userOptional.get();
 
               //login correcto
-              if (userToLogin.getPassword().equals(user.getPassword())) {
-                response.put("message", "Login successful");
+              if (passwordEncoder.matches(user.getPassword(), userToLogin.getPassword())) {
+                  String token = Security.generateToken(userToLogin.getEmail());
+                  response.put("message", "Login successful");
+                  response.put("token", token);
                 //devulve JSON con los datos del user en objeto
-                response.put ("user", userToLogin);
-
-                return ResponseEntity.status(HttpStatus.OK).body(response);
+                  response.put ("user", userToLogin);
+                  return ResponseEntity.status(HttpStatus.OK).body(response);
                 //Fallo al login
               } else {
-                response.put("message", "Incorrect password");
-
-                return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body(response);
+                  response.put("message", "Incorrect password");
+                  return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body(response);
               }
          } else {
               response.put("message", "User not found");

@@ -70,12 +70,12 @@ public class BookController {
     }
 
     @DeleteMapping("/delete/{bookId}")
-    public ResponseEntity<String> deleteBook(@PathVariable Long bookId) {
+    public ResponseEntity<Map<String, String>> deleteBook(@PathVariable Long bookId) {
         if (bookRepository.existsById(bookId)) {
             bookRepository.deleteById(bookId);
-            return ResponseEntity.ok("Book deleted successfully");
+            return ResponseEntity.ok(Map.of("message","Book deleted successfully"));
         } else {
-            return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Book not found");
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body(Map.of("message","Book not found"));
         }
     }
     @PutMapping("/update/{bookId}")

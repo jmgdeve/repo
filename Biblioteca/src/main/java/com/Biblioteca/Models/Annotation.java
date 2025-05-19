@@ -1,5 +1,6 @@
 package com.Biblioteca.Models;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import jakarta.persistence.*;
 
 @Entity
@@ -8,10 +9,13 @@ public class Annotation {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
+
+    @Column(columnDefinition = "TEXT")
     private String text;
     private String page;
     private String color;
     @ManyToOne
+    @JsonBackReference
     @JoinColumn(name = "bookId", nullable = false)
     private Book book;
 
