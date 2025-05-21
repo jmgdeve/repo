@@ -2,7 +2,7 @@
   <h2>Mis Libros</h2>
 
   <button (click)="AddBookForm = !AddBookForm" class="add-book-button">
-    {{ AddBookForm ? 'Cancelar' : 'Añadir Libro' }}
+    {{ AddBookForm ? 'Cancelar' : ' ➕ Añadir Libro' }}
   </button>
 
   <div *ngIf="AddBookForm" class="add-book-form">
@@ -37,7 +37,7 @@
     <div class="book-header">
       <h3 class="book-title" (click)="selectBook(book)">{{ book.title }} ({{ book.year }})</h3>
       <div class="book-actions">
-        <button (click)="deleteBook(book.bookId)" class="delete-button">Eliminar</button>
+        <button (click)="deleteBook(book.bookId)" class="delete-button"> 🗑️ Eliminar</button>
         <button (click)="toggleEditBook(book.bookId)">Modificar Libro</button>
       </div>
     </div>

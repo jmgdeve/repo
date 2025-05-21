@@ -3,10 +3,9 @@
   <div class="annotations-header">
     <button 
       (click)="openAnnotationForm()" 
-      [disabled]="bookId === null"
       class="addannotation-button"
       aria-label="Añadir anotación">
-      Añadir Anotación
+      Añadir Anotación del libro seleccionado
     </button>
     <div class="annotations-list" *ngIf="annotations && annotations.length > 0">
       <h4 id="annotations-list-title">Anotaciones:</h4>

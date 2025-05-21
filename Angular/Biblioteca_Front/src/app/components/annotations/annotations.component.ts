@@ -70,6 +70,8 @@ export class AnnotationsComponent implements OnInit {
     if (this.bookId !== null) {
       this.selectedBookId = this.bookId;
       this.showAnnotationForm = true;
+    }else {
+      alert('No hay libro seleccionado');
     }
   }
 

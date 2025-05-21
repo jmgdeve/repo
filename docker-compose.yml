@@ -1,0 +1,33 @@
+version: '3.8'
+services:
+  backend:
+    build:
+      context: ./Biblioteca
+    ports:
+      - "8080:8080"
+    depends_on:
+      - db
+    environment:
+      # Configuración de las variables de entorno
+       SPRING_DATASOURCE_URL: jdbc:mysql://db:3306/biblioteca
+       SPRING_DATASOURCE_USERNAME: root
+       SPRING_DATASOURCE_PASSWORD: password
+  frontend:
+    build:
+      context: ./Angular/Biblioteca_Front
+    ports:
+      - "4200:80"
+    depends_on:
+      - backend
+  db:
+    image: mysql:8
+    environment:
+      MYSQL_ROOT_PASSWORD: password
+      MYSQL_DATABASE: biblioteca
+    ports:
+      - "3306:3306"
+    volumes:
+      - db_data:/var/lib/mysql
+
+volumes:
+  db_data:
