@@ -1,4 +1,4 @@
-# Dockerfile para construir a imagem do frontend da biblioteca
+# Dockerfile para construir la imagen de frontend 
 FROM node:20 AS build
 WORKDIR /app
 COPY . .
